@@ -1,5 +1,4 @@
-FROM python:3.12.8-alpine3.21 AS full
-COPY --from=ghcr.io/astral-sh/uv:0.5.21 /uv /uvx /bin/
+FROM python:3.12.8-alpine3.21
 
 # See: https://github.com/hadolint/hadolint/wiki/DL4006
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
@@ -8,6 +7,10 @@ SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 COPY . /src
 WORKDIR /src
 
-# Upstart app using "uv". https://docs.astral.sh/uv/
+# Install uv (https://docs.astral.sh/uv/)
+COPY --from=ghcr.io/astral-sh/uv:0.5.21 /uv /uvx /bin/
+
+# Set up the venv using uv.lock file
 RUN uv sync --frozen
+# Upstart app using uv
 CMD ["uv", "run", "fastapi", "run", "app/main.py", "--port", "80"]
