@@ -1,6 +1,14 @@
 **/*.pyc
 **/*.md
 
+# python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
 # virtual environment
 .venv
 
@@ -11,3 +19,6 @@
 # docker
 docker-compose.yml
 Dockerfile
+
+# VS Code
+.vscode
